@@ -130,6 +130,21 @@ public class TAGrid : MonoBehaviour
             for (int y = 0; y < gridSize.y; y++)
             {
                 grid[x, y].ignore = (Physics.CheckSphere(grid[x,y].position, nodeRadius, ignoreLayer));
+                if (grid[x, y].ignore) 
+                {
+                    // used to just have to put around it around it more to make it easy for it to ignore the it and go smoothly around it.
+                    int adder = 1;
+                    
+                    grid[x + adder, y + adder].ignore = true;
+                    grid[x - adder, y - adder].ignore = true;
+
+                    grid[x + adder, y - adder].ignore = true;
+                    grid[x + adder, y - adder].ignore = true;
+
+                    grid[x - adder, y + adder].ignore = true;
+                    grid[x - adder, y + adder].ignore = true;
+                    
+                }
             }
         }
         return grid;

@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/TAPather/Scenes/Example Scene.unity
+    path: Assets/TAPather/Example/Scenes/Example Scene.unity
     guid: c0623e620bbbacb4c9e2c113059374b6
   m_configObjects: {}
