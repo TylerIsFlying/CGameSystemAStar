@@ -17,16 +17,20 @@ public class TAGrid : MonoBehaviour
     public TANode[,] gridGlobal { get { return _grid; } }
     public float nodeDiameterGlobal { get { return nodeRadius * 2; } }
     public float nodeRadiusGlobal { get { return nodeRadius; } }
+    [Header("Radius")]
     [SerializeField]
     private float nodeRadius;
+    [Header("Grid")]
+    [SerializeField]
+    private Vector2 gridWorldSize;
+    [Header("Layers")]
+    [SerializeField]
+    private LayerMask ignoreLayer;
+    [Header("Gizmos")]
     [SerializeField]
     private bool enableGizmos;
     [SerializeField]
     private bool enableConnectionVisual;
-    [SerializeField]
-    private Vector2 gridWorldSize;
-    [SerializeField]
-    private LayerMask ignoreLayer;
     [SerializeField]
     private Color gizmoWallColors;
     [SerializeField]

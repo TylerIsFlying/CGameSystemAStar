@@ -5,12 +5,18 @@ using UnityEngine;
 public class TAFollow : MonoBehaviour
 {
     // serialized vars
+    [Header("Targets")]
     [SerializeField]
-    public Transform seeker, target;
+    private Transform seeker, target;
     [SerializeField]
-    public float speed;
+    private float speed;
+    [Header("Range")]
+    [SerializeField]
+    private float detectRange = 0.1f;
+    [Header("Grid")]
     [SerializeField]
     private TAGrid grid;
+    [Header("Gizmos")]
     [SerializeField]
     private bool enableGizmos;
     [SerializeField]
@@ -18,18 +24,18 @@ public class TAFollow : MonoBehaviour
     // private vars
     private List<TANode> path;
     private int pathCounter;
+    private Vector3 targetLastPos;
     private void Start()
     {
         path = new List<TANode>();
         pathCounter = 0;
         path = TAPathing.SetTarget(seeker.position, target.position, grid);
+        targetLastPos = target.transform.position;
     }
     private void Update()
     {
-        if (path != null && path.Count > 0)
+        if (path != null && (path.Count > 0 && !(pathCounter >= path.Count)))
         {
-            if (pathCounter >= path.Count) return;
-
             if (Vector3.Distance(seeker.position, new Vector3(path[pathCounter].position.x, seeker.position.y, path[pathCounter].position.z)) < 1.0f)
             {
                 pathCounter++;
@@ -38,7 +44,12 @@ public class TAFollow : MonoBehaviour
             {
                 seeker.position = Vector3.MoveTowards(seeker.position, new Vector3(path[pathCounter].position.x, seeker.position.y, path[pathCounter].position.z), Time.deltaTime * speed);
             }
-
+        }
+        if (Vector3.Distance(target.position, targetLastPos) > detectRange)
+        {
+            path = TAPathing.SetTarget(seeker.position, target.position, grid);
+            targetLastPos = target.transform.position;
+            pathCounter = 0;
         }
     }
 
